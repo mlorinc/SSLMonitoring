@@ -1,0 +1,21 @@
+.TH sslsniff
+.SH sslsniff
+sslsniff \- Monitoring SSL spojení
+.SH SYNOPSIS
+.B sslsniff
+[\fB\-i\fR \fIinterface\fR]
+[\fB\-r\fR \fIfile\fR]
+.SH DESCRIPTION
+.B sslsniff
+analýza SSL spojení. Vypisuje dáta o zahytených spojeniach vo formáte <timestamp>,<client ip>,<client port>,<server ip>,<SNI>,<bytes>,<packets>,<duration sec>.
+V prípade, že spojenie nebolo ukončené korektne, duration sec obsahuje hodnotu "-".
+Program podporuje zoradenie packetov, ale v niektorých prípadoch <packets> nemusí byť správne.
+Napríklad, application data prídu s rovnakým sekvenčným číslom skôršie ako ACK packet bez payloadu.
+Stráta paketov a znovu poslanie stratených paketov nie je podporované.
+.SH OPTIONS
+.TP
+.BR \-i
+Rozhranie, na ktorom prebehne analýza.
+.TP
+.BR \-r
+Súbor vo formáte pcapng, z ktorého sa budú analyzovať SSL spojenia.
