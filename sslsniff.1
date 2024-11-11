@@ -1,21 +1,24 @@
 .TH sslsniff
 .SH sslsniff
-sslsniff \- Monitoring SSL spojení
+sslsniff \- SSL Monitoring
 .SH SYNOPSIS
 .B sslsniff
 [\fB\-i\fR \fIinterface\fR]
 [\fB\-r\fR \fIfile\fR]
 .SH DESCRIPTION
 .B sslsniff
-analýza SSL spojení. Vypisuje dáta o zahytených spojeniach vo formáte <timestamp>,<client ip>,<client port>,<server ip>,<SNI>,<bytes>,<packets>,<duration sec>.
-V prípade, že spojenie nebolo ukončené korektne, duration sec obsahuje hodnotu "-".
-Program podporuje zoradenie packetov, ale v niektorých prípadoch <packets> nemusí byť správne.
-Napríklad, application data prídu s rovnakým sekvenčným číslom skôršie ako ACK packet bez payloadu.
-Stráta paketov a znovu poslanie stratených paketov nie je podporované.
+SSL analyser capable of extracting <timestamp>,<client ip>,<client port>,<server ip>,<SNI>,<bytes>,<packets>,<duration sec> from captured
+TCP data streams contained within pcapng file. The most interesting part is SNI which is a server domain client connects to and before
+TLS 1.3 ESNI this piece of information is unecrypted thus it is possible to listen to at what servers subject is connected to.
+It must be noted, that in case some session was not correctly closed (not using properly TCP FIN flag or RST)
+duration sec will not be available and instead it will be set to "-".
+The program can handle unordered TCP packets in pcapng file however in some instances it might not be case.
+For example, when application data are received before ACK packet without payload. Packet loss and
+packet re-send is not supported neither.
 .SH OPTIONS
 .TP
 .BR \-i
-Rozhranie, na ktorom prebehne analýza.
+Interface to analyse.
 .TP
 .BR \-r
-Súbor vo formáte pcapng, z ktorého sa budú analyzovať SSL spojenia.
+File in pcapng format from which data will be used for analysis.
